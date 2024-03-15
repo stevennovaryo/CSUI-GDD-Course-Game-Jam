@@ -1,0 +1,9 @@
+[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://b4umei2pbffyb"]
+
+[ext_resource type="Gradient" uid="uid://cw3wysh3a8saw" path="res://scenes/textures/LightParticlesGradientTexture.tres" id="1_xn4sb"]
+
+[resource]
+gradient = ExtResource("1_xn4sb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.599078, 0.414747)

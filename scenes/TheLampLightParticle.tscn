@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgxrqxun850l0"]
+
+[ext_resource type="Texture2D" uid="uid://b4umei2pbffyb" path="res://scenes/TheLampParticleTexture.tres" id="1_c2y42"]
+[ext_resource type="Script" path="res://scenes/TheLampParticle.gd" id="2_ew4js"]
+
+[node name="TheLampLightParticle" type="Sprite2D"]
+position = Vector2(103, 18)
+texture = ExtResource("1_c2y42")
+script = ExtResource("2_ew4js")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+z_index = 2000
+blend_mode = 2
+texture = ExtResource("1_c2y42")
+texture_scale = 0.5

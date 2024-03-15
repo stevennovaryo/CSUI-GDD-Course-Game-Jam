@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bvx7xcnjtr0hj"]
+
+[ext_resource type="Shader" path="res://scenes/BlackAndWhite.gdshader" id="1_x4kgg"]
+
+[resource]
+shader = ExtResource("1_x4kgg")
+shader_parameter/red_weight = 0.2
+shader_parameter/blue_weight = 0.2
+shader_parameter/green_weight = 0.2
+shader_parameter/brightness = 1.0

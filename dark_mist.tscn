@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dnqqhd3cqqfmf"]
+
+[ext_resource type="Shader" path="res://DarkMist.gdshader" id="1_kjyna"]
+[ext_resource type="Texture2D" uid="uid://q1yj0yaax0qr" path="res://assets/MainCharacter/Attack-01-Sheet.png" id="2_i8to6"]
+
+[sub_resource type="Environment" id="Environment_m67ng"]
+background_mode = 2
+background_energy_multiplier = 16.0
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 16.0
+reflected_light_source = 2
+fog_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c8vdf"]
+render_priority = 0
+shader = ExtResource("1_kjyna")
+
+[sub_resource type="Gradient" id="Gradient_6tge4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nm5mn"]
+gradient = SubResource("Gradient_6tge4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_61a3l"]
+render_priority = 0
+shader = ExtResource("1_kjyna")
+
+[node name="DarkMist" type="Node2D"]
+z_index = 100
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m67ng")
+
+[node name="ColorRect" type="ColorRect" parent="WorldEnvironment"]
+visible = false
+material = SubResource("ShaderMaterial_c8vdf")
+offset_right = 821.0
+offset_bottom = 396.0
+color = Color(0, 0, 0, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = 200
+position = Vector2(80, -5)
+texture = SubResource("GradientTexture2D_nm5mn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_61a3l")
+texture = ExtResource("2_i8to6")

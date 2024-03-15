@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4lvv5sw2v7ws"]
+
+[ext_resource type="Shader" path="res://scenes/SimpleBlur.gdshader" id="1_cu37m"]
+[ext_resource type="Texture2D" uid="uid://d06e6um652fuh" path="res://assets/OakWoods/background_layer_3.png" id="1_mp2em"]
+[ext_resource type="Texture2D" uid="uid://ddoy72cv456j4" path="res://assets/OakWoods/background_layer_1.png" id="1_qqlt4"]
+[ext_resource type="Texture2D" uid="uid://doh2vk01x3sqb" path="res://assets/OakWoods/background_layer_2.png" id="2_0ssf3"]
+[ext_resource type="Shader" path="res://scenes/BgBlackAndWhite.gdshader" id="2_b3f2r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lchrw"]
+shader = ExtResource("1_cu37m")
+shader_parameter/lod = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oubto"]
+shader = ExtResource("2_b3f2r")
+shader_parameter/red_weight = 0.2
+shader_parameter/blue_weight = 0.2
+shader_parameter/green_weight = 0.2
+shader_parameter/brightness = 0.05
+
+[node name="OakWoodBackground" type="Node2D"]
+z_index = -1000
+material = SubResource("ShaderMaterial_lchrw")
+position = Vector2(97, -178)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+material = SubResource("ShaderMaterial_oubto")
+use_parent_material = true
+position = Vector2(97, -178)
+motion_mirroring = Vector2(960, 0)
+
+[node name="BackgroundLayer1" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+use_parent_material = true
+scale = Vector2(4, 4)
+texture = ExtResource("1_qqlt4")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+material = SubResource("ShaderMaterial_oubto")
+use_parent_material = true
+position = Vector2(97, -178)
+motion_scale = Vector2(0.5, 0.9)
+motion_mirroring = Vector2(960, 0)
+
+[node name="BackgroundLayer2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+use_parent_material = true
+scale = Vector2(4, 4)
+texture = ExtResource("2_0ssf3")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+material = SubResource("ShaderMaterial_oubto")
+use_parent_material = true
+position = Vector2(97, -178)
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(960, 0)
+
+[node name="BackgroundLayer3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+use_parent_material = true
+scale = Vector2(4, 4)
+texture = ExtResource("1_mp2em")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://lo3pclqytjn4"]
+
+[ext_resource type="Material" uid="uid://bvx7xcnjtr0hj" path="res://scenes/BlackAndWhite.tres" id="1_2ky4v"]
+[ext_resource type="TileSet" uid="uid://ck8pw28iteutc" path="res://scenes/oak_woods_tileset.tres" id="1_om7qx"]
+
+[node name="TileMap" type="TileMap"]
+material = ExtResource("1_2ky4v")
+tile_set = ExtResource("1_om7qx")
+format = 2

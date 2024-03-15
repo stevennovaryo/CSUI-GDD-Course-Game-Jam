@@ -1,0 +1,492 @@
+[gd_scene load_steps=22 format=3 uid="uid://cwdlw5t0lu7h0"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="1_nlcnd"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="2_eoigl"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_ne41s"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_n2dfk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_b6yvc"]
+[ext_resource type="Script" path="res://assets/Slime/SlimeAI.gd" id="6_8sm04"]
+[ext_resource type="Material" uid="uid://bvx7xcnjtr0hj" path="res://scenes/BlackAndWhite.tres" id="7_j8al0"]
+[ext_resource type="SpriteFrames" uid="uid://c6ix65vbrlykn" path="res://assets/Slime/smile.tres" id="8_majbv"]
+[ext_resource type="Script" path="res://middleware/HitBox.gd" id="9_6r1vn"]
+[ext_resource type="Script" path="res://HurtBox.gd" id="10_vf7dv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qvn5l"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_obqul"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitBox1:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/HitBox2:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D/HitBox3:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D/BodyHitBox:monitoring")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_twnuj"]
+_data = {
+"RESET": SubResource("Animation_obqul")
+}
+
+[sub_resource type="Animation" id="Animation_cjibm"]
+resource_name = "appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/BodyHitBox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_hj48t"]
+resource_name = "attack"
+length = 3.30001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3, 3.1, 3.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/HitBox1:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.2, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D/HitBox2:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D/HitBox3:monitoring")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.6, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_pmkl3"]
+resource_name = "death"
+length = 2.20001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/BodyHitBox:monitoring")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_0iicu"]
+resource_name = "hurt"
+length = 0.150005
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hurt"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_f24r6"]
+resource_name = "idle"
+length = 1.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_a7cso"]
+resource_name = "run"
+length = 0.70001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"move"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajmil"]
+_data = {
+"appear": SubResource("Animation_cjibm"),
+"attack": SubResource("Animation_hj48t"),
+"death": SubResource("Animation_pmkl3"),
+"hurt": SubResource("Animation_0iicu"),
+"idle": SubResource("Animation_f24r6"),
+"run": SubResource("Animation_a7cso")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhx1w"]
+size = Vector2(13, 17)
+
+[node name="EnemiesSlime" type="Node2D"]
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("1_nlcnd")
+
+[node name="ParallelState" type="Node" parent="StateChart"]
+script = ExtResource("2_eoigl")
+
+[node name="MovementState" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("3_ne41s")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("4_n2dfk")
+
+[node name="To Run" type="Node" parent="StateChart/ParallelState/MovementState/Idle"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../Run")
+event = &"SlimeRun"
+
+[node name="GroundAttack" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("4_n2dfk")
+
+[node name="To Run" type="Node" parent="StateChart/ParallelState/MovementState/GroundAttack"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../Run")
+event = &"SlimeRun"
+
+[node name="Run" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("4_n2dfk")
+
+[node name="To Ground Attack" type="Node" parent="StateChart/ParallelState/MovementState/Run"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../GroundAttack")
+event = &"SlimeAttack"
+
+[node name="Hurt" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("4_n2dfk")
+
+[node name="To Idle" type="Node" parent="StateChart/ParallelState/MovementState/Hurt"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../Run")
+event = &"SlimeRun"
+
+[node name="To Hurt" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../Hurt")
+event = &"SlimeHurt"
+
+[node name="Death" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("4_n2dfk")
+
+[node name="To Death" type="Node" parent="StateChart/ParallelState/MovementState"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../Death")
+event = &"SlimeDeath"
+
+[node name="DirectionState" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("3_ne41s")
+initial_state = NodePath("FaceRight")
+
+[node name="FaceLeft" type="Node" parent="StateChart/ParallelState/DirectionState"]
+script = ExtResource("4_n2dfk")
+
+[node name="Transition" type="Node" parent="StateChart/ParallelState/DirectionState/FaceLeft"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../FaceRight")
+event = &"SlimeRight"
+
+[node name="FaceRight" type="Node" parent="StateChart/ParallelState/DirectionState"]
+script = ExtResource("4_n2dfk")
+
+[node name="Transition" type="Node" parent="StateChart/ParallelState/DirectionState/FaceRight"]
+script = ExtResource("5_b6yvc")
+to = NodePath("../../FaceLeft")
+event = &"SlimeLeft"
+
+[node name="PlatformerController2D" type="CharacterBody2D" parent="."]
+script = ExtResource("6_8sm04")
+max_acceleration = 5000
+max_hit_point = 200
+attack_damage = 1
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="PlatformerController2D"]
+material = ExtResource("7_j8al0")
+sprite_frames = ExtResource("8_majbv")
+animation = &"idle"
+
+[node name="BodyHitBox" type="Area2D" parent="PlatformerController2D/Sprite2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("9_6r1vn")
+hitbox_damage = 50
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerController2D/Sprite2D/BodyHitBox"]
+polygon = PackedVector2Array(-18, 0, 5, 0, 3, 31, -33, 32)
+
+[node name="HitBox1" type="Area2D" parent="PlatformerController2D/Sprite2D"]
+collision_layer = 0
+monitoring = false
+monitorable = false
+script = ExtResource("9_6r1vn")
+hitbox_damage = 20
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerController2D/Sprite2D/HitBox1"]
+polygon = PackedVector2Array(8, 16, 38, 19, 16, 27, -8, 27)
+
+[node name="HitBox2" type="Area2D" parent="PlatformerController2D/Sprite2D"]
+collision_layer = 0
+monitoring = false
+monitorable = false
+script = ExtResource("9_6r1vn")
+hitbox_damage = 17
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerController2D/Sprite2D/HitBox2"]
+polygon = PackedVector2Array(-38, 3, -11, 2, -23, 13, -47, 6)
+
+[node name="HitBox3" type="Area2D" parent="PlatformerController2D/Sprite2D"]
+collision_layer = 0
+monitoring = false
+monitorable = false
+script = ExtResource("9_6r1vn")
+hitbox_damage = 12
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerController2D/Sprite2D/HitBox3"]
+polygon = PackedVector2Array(2, 9, 29, 13, 5, 18, -19, 19)
+
+[node name="HurtBox" type="Area2D" parent="PlatformerController2D/Sprite2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("10_vf7dv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformerController2D/Sprite2D/HurtBox"]
+position = Vector2(-7, 17)
+shape = SubResource("CapsuleShape2D_qvn5l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlatformerController2D"]
+libraries = {
+"": SubResource("AnimationLibrary_twnuj"),
+"Slime": SubResource("AnimationLibrary_ajmil")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformerController2D"]
+position = Vector2(-7.5, 22.5)
+shape = SubResource("RectangleShape2D_rhx1w")
+
+[connection signal="event_received" from="StateChart/ParallelState/MovementState/Idle" to="PlatformerController2D" method="_on_idle_event_received"]
+[connection signal="state_entered" from="StateChart/ParallelState/MovementState/Idle" to="PlatformerController2D" method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/MovementState/Idle" to="PlatformerController2D" method="_on_idle_state_physics_processing"]
+[connection signal="event_received" from="StateChart/ParallelState/MovementState/GroundAttack" to="PlatformerController2D" method="_on_ground_attack_event_received"]
+[connection signal="state_entered" from="StateChart/ParallelState/MovementState/GroundAttack" to="PlatformerController2D" method="_on_ground_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/MovementState/Run" to="PlatformerController2D" method="_on_run_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/MovementState/Run" to="PlatformerController2D" method="_on_run_state_physics_processing"]
+[connection signal="event_received" from="StateChart/ParallelState/MovementState/Hurt" to="PlatformerController2D" method="_on_hurt_event_received"]
+[connection signal="state_entered" from="StateChart/ParallelState/MovementState/Hurt" to="PlatformerController2D" method="_on_hurt_state_entered"]
+[connection signal="event_received" from="StateChart/ParallelState/MovementState/Death" to="PlatformerController2D" method="_on_death_event_received"]
+[connection signal="state_entered" from="StateChart/ParallelState/MovementState/Death" to="PlatformerController2D" method="_on_death_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/DirectionState/FaceLeft" to="PlatformerController2D" method="_on_face_left_state_entered"]
+[connection signal="state_processing" from="StateChart/ParallelState/DirectionState/FaceLeft" to="PlatformerController2D" method="_on_face_left_state_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/DirectionState/FaceRight" to="PlatformerController2D" method="_on_face_right_state_entered"]
+[connection signal="state_processing" from="StateChart/ParallelState/DirectionState/FaceRight" to="PlatformerController2D" method="_on_face_right_state_processing"]
+[connection signal="hit_point_depleted" from="PlatformerController2D" to="PlatformerController2D" method="_on_hit_point_depleted"]
+[connection signal="on_hit" from="PlatformerController2D" to="PlatformerController2D" method="_on_on_hit"]
+[connection signal="animation_finished" from="PlatformerController2D/AnimationPlayer" to="PlatformerController2D" method="_on_animation_player_animation_finished"]

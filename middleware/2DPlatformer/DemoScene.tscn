@@ -1,0 +1,143 @@
+[gd_scene load_steps=15 format=3 uid="uid://cqfhnpb7xftpo"]
+
+[ext_resource type="PackedScene" uid="uid://cvw1da2wv4gk5" path="res://scenes/Player.tscn" id="1_sf16t"]
+[ext_resource type="Script" path="res://BasicCharacterStats.gd" id="2_0t5tc"]
+[ext_resource type="Texture2D" uid="uid://ddh77orceiqhk" path="res://icon.svg" id="2_eqg0o"]
+[ext_resource type="Script" path="res://HurtBox.gd" id="4_v18ed"]
+[ext_resource type="Script" path="res://middleware/HitBox.gd" id="5_sp0r8"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(1024, 112)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(416, 112)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(64, 608)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iacod"]
+size = Vector2(131, 125.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0gy3"]
+size = Vector2(131.75, 126.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7bpe2"]
+size = Vector2(131, 124)
+
+[sub_resource type="Curve2D" id="Curve2D_6fe8r"]
+_data = {
+"points": PackedVector2Array(2, 2, 1, 100, 0, 0, 8.23629, 29.7292, -8.23629, -29.7292, 10, 10)
+}
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_juyvv"]
+offsets = PackedFloat32Array(0.54902, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6qhvi"]
+gradient = SubResource("Gradient_juyvv")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.866973, 0.169725)
+
+[node name="Main" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -100
+offset_right = 1167.0
+offset_bottom = 638.0
+color = Color(0, 0, 0, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasModulate"]
+position = Vector2(520, 544)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasModulate/StaticBody2D"]
+offset_left = -520.0
+offset_top = -56.0
+offset_right = 504.0
+offset_bottom = 56.0
+color = Color(0, 0.443137, 0.027451, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/StaticBody2D"]
+position = Vector2(-8, 0)
+shape = SubResource("1")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="CanvasModulate"]
+position = Vector2(520, 360)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasModulate/StaticBody2D2"]
+offset_left = -520.0
+offset_top = 16.0
+offset_right = -104.0
+offset_bottom = 128.0
+color = Color(0, 0.443137, 0.027451, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/StaticBody2D2"]
+position = Vector2(-312, 72)
+shape = SubResource("2")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="CanvasModulate"]
+position = Vector2(520, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/StaticBody2D3"]
+position = Vector2(-552, -64)
+shape = SubResource("3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CanvasModulate/StaticBody2D3"]
+position = Vector2(536, -64)
+shape = SubResource("3")
+
+[node name="Player" parent="CanvasModulate" instance=ExtResource("1_sf16t")]
+position = Vector2(288, 320)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="CanvasModulate"]
+position = Vector2(109, 331)
+collision_layer = 2
+script = ExtResource("2_0t5tc")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasModulate/CharacterBody2D"]
+z_index = -5
+position = Vector2(-8, -24)
+texture = ExtResource("2_eqg0o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/CharacterBody2D"]
+position = Vector2(-6, -24.125)
+shape = SubResource("RectangleShape2D_iacod")
+
+[node name="HurtBox" type="Area2D" parent="CanvasModulate/CharacterBody2D"]
+visible = false
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-5, -22)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_v18ed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/CharacterBody2D/HurtBox"]
+position = Vector2(-1.875, -3.125)
+shape = SubResource("RectangleShape2D_p0gy3")
+
+[node name="HitBox" type="Area2D" parent="CanvasModulate/CharacterBody2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("5_sp0r8")
+hitbox_damage = 1000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/CharacterBody2D/HitBox"]
+z_index = -1
+position = Vector2(-6.5, -23)
+shape = SubResource("RectangleShape2D_7bpe2")
+
+[node name="Path2D" type="Path2D" parent="CanvasModulate"]
+curve = SubResource("Curve2D_6fe8r")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = 200
+position = Vector2(220, 330)
+scale = Vector2(2.90625, 2.42188)
+blend_mode = 2
+texture = SubResource("GradientTexture2D_6qhvi")

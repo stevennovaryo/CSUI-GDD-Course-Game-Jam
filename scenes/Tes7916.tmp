@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://4dfvfmwk5x2k"]
+
+[ext_resource type="PackedScene" uid="uid://lo3pclqytjn4" path="res://scenes/WoodsTileSet.tscn" id="1_o5n37"]
+[ext_resource type="PackedScene" uid="uid://cvw1da2wv4gk5" path="res://scenes/Player.tscn" id="2_f42q1"]
+[ext_resource type="PackedScene" uid="uid://d1sglxnsioswq" path="res://scenes/lightsources/RoadSideLamp.tscn" id="3_tu46q"]
+[ext_resource type="PackedScene" uid="uid://c4lvv5sw2v7ws" path="res://scenes/OakWoodBackground.tscn" id="4_r446k"]
+[ext_resource type="PackedScene" uid="uid://dqptjy8byratj" path="res://scenes/KillZone.tscn" id="5_7xcfw"]
+[ext_resource type="Script" path="res://scenes/WorldEnvironment.gd" id="6_q1kvh"]
+[ext_resource type="PackedScene" uid="uid://cw15yq76uoxf7" path="res://assets/Slime/slime.tscn" id="6_v2gxm"]
+
+[sub_resource type="Gradient" id="Gradient_f6pci"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4wiep"]
+gradient = SubResource("Gradient_f6pci")
+
+[sub_resource type="Environment" id="Environment_a0ljp"]
+background_mode = 3
+tonemap_exposure = 3.89
+glow_enabled = true
+glow_levels/7 = 16.0
+glow_blend_mode = 1
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture2D_4wiep")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+z_index = 1
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+
+[node name="RoadSideLamp" parent="CanvasModulate" instance=ExtResource("3_tu46q")]
+position = Vector2(241, -33)
+
+[node name="TileMap" parent="CanvasModulate" instance=ExtResource("1_o5n37")]
+layer_0/name = "Background"
+layer_0/tile_data = PackedInt32Array(-262123, 983044, 1, 131096, 196610, 2, 196632, 196610, 2, 262168, 196610, 2, 327704, 196610, 2, 196629, 65538, 1, 196630, 65538, 1, 262166, 65538, 1, 327702, 65538, 1, 196631, 65538, 1, 262167, 65538, 1, 262165, 65538, 1, 262164, 65538, 1, 196628, 65538, 1, 327701, 65538, 1, 327700, 65538, 1, 327703, 65538, 1, 131095, 65538, 1, -262121, 983042, 1)
+layer_1/name = "Touchable"
+layer_1/tile_data = PackedInt32Array(0, 65538, 0, 1, 65538, 0, 2, 65538, 0, 65535, 2, 0, 3, 851971, 6, 4, 393218, 0, 5, 393218, 0, 6, 393218, 0, 7, 393218, 0, 8, 393218, 0, 9, 393218, 0, 10, 458754, 0, 131071, 2, 1, 196607, 2, 2, 262143, 2, 1, 327679, 2, 2, 65536, 65538, 1, 131072, 65538, 1, 196608, 65538, 1, 262144, 65538, 1, 65537, 65538, 1, 131073, 65538, 1, 196609, 65538, 1, 262145, 65538, 1, 65538, 65538, 1, 131074, 65538, 1, 196610, 65538, 1, 262146, 65538, 1, 65539, 65538, 1, 131075, 65538, 1, 196611, 65538, 1, 262147, 65538, 1, 65540, 65538, 1, 131076, 65538, 1, 196612, 65538, 1, 262148, 65538, 1, 65541, 65538, 1, 131077, 65538, 1, 196613, 65538, 1, 262149, 65538, 1, 65542, 65538, 1, 131078, 65538, 1, 196614, 65538, 1, 262150, 65538, 1, 65543, 65538, 1, 131079, 65538, 1, 196615, 65538, 1, 262151, 65538, 1, 65544, 65538, 1, 131080, 65538, 1, 196616, 65538, 1, 262152, 65538, 1, 65545, 65538, 1, 131081, 65538, 1, 196617, 65538, 1, 262153, 65538, 1, 65546, 65538, 1, 131082, 65538, 1, 196618, 65538, 1, 262154, 65538, 1, 11, 524290, 0, 65547, 196610, 1, 131083, 196610, 13, 131084, 393218, 0, 131085, 458754, 0, 131086, 393218, 0, 131087, 393218, 0, 131088, 458754, 0, 131089, 393218, 0, 131090, 458754, 0, 196619, 65538, 1, 196620, 65538, 1, 196621, 65538, 1, 196622, 65538, 1, 196623, 65538, 1, 196624, 65538, 1, 196625, 65538, 1, 196626, 65538, 1, 196627, 65538, 1, 262163, 65538, 1, 262162, 65538, 1, 262161, 65538, 1, 262160, 65538, 1, 262159, 65538, 1, 262158, 65538, 1, 262157, 65538, 1, 262156, 65538, 1, 262155, 65538, 1, 65555, 327682, 0, 131091, 131074, 13, 20, 917506, 1, -65516, 917506, 1, -131053, 917506, 3, -131052, 1245186, 5, -196589, 917506, 2, -262125, 917506, 1, -131049, 1114114, 2, -196585, 1114114, 2, -262121, 720898, 3, -196588, 983042, 1, -262124, 983042, 1, -262123, 589826, 3, -196587, 983042, 1, -131051, 983042, 1, -65515, 983042, 1, 21, 983042, 1, 22, 983042, 1, -65514, 983042, 1, -131050, 983042, 1, -196586, 983042, 1, -262120, 1114114, 3, 23, 1114114, 2, -327661, 917506, 2, -327656, 1114114, 2, -393192, 1114114, 2, -458728, 1114114, 2, -524264, 65538, 3, -524268, 65538, 3, -458732, 983042, 1, -393196, 983042, 1, -393195, 983042, 1, -393194, 983042, 1, -458730, 983042, 1, -524266, 65538, 3, -524267, 65538, 3, -458731, 983042, 1, -327659, 983042, 1, -327660, 983042, 1, -327658, 983042, 1, -393193, 983042, 1, -458729, 983042, 1, -524265, 65538, 3, -327657, 983042, 1, -589802, 65538, 1, -589803, 65538, 1, -589801, 65538, 1, -589800, 65538, 1, -655342, 327682, 0, -655341, 393218, 0, -655340, 393218, 0, -655339, 393218, 0, -655338, 393218, 0, -655337, 393218, 0, -655336, 393218, 0, -655335, 524290, 0, -589806, 2, 3, -524269, 2, 3, -589805, 131074, 12, -589804, 65538, 1, -524263, 196610, 3, -589799, 196610, 2, -458733, 917506, 2, -393197, 917506, 2, 65556, 393218, 0, 65557, 393218, 0, 65558, 393218, 0, 65559, 393218, 0, 65560, 524290, 0, 131092, 65538, 1, 196628, 65538, 1, 262164, 65538, 1, 262165, 65538, 1, 262166, 65538, 1, 196630, 65538, 1, 196631, 65538, 1, 131095, 65538, 1, 131094, 65538, 1, 131093, 65538, 1, 196629, 65538, 1, 262167, 65538, 1, -65513, 1114114, 2, -262122, 851970, 10)
+
+[node name="Player" parent="CanvasModulate" instance=ExtResource("2_f42q1")]
+position = Vector2(-7, -17)
+
+[node name="OakWoodBackground" parent="CanvasModulate" instance=ExtResource("4_r446k")]
+
+[node name="RoadSideLamp" parent="." instance=ExtResource("3_tu46q")]
+z_index = 1
+position = Vector2(559, -129)
+
+[node name="Node2D" parent="." instance=ExtResource("5_7xcfw")]
+z_index = 300
+position = Vector2(0, 100)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a0ljp")
+script = ExtResource("6_q1kvh")
+
+[node name="EnemiesSlime" parent="." instance=ExtResource("6_v2gxm")]
+z_index = 100
+position = Vector2(553, -10)
+
+[connection signal="player_low_health" from="CanvasModulate/Player" to="WorldEnvironment" method="_on_player_player_low_health"]

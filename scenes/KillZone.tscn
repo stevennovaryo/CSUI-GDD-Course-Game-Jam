@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqptjy8byratj"]
+
+[ext_resource type="Script" path="res://scenes/KillZone.gd" id="1_ysklp"]
+[ext_resource type="Script" path="res://BasicCharacterStats.gd" id="2_44vfm"]
+[ext_resource type="Script" path="res://middleware/HitBox.gd" id="2_fc3h2"]
+
+[sub_resource type="Gradient" id="Gradient_5ry8g"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.313726, 0.575163, 0.856209)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.882353, 0, 0, 0, 0.784314, 0, 0, 0, 0.392157)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lbsl7"]
+gradient = SubResource("Gradient_5ry8g")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r1eq"]
+size = Vector2(64, 128)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ysklp")
+
+[node name="Node2D" type="CharacterBody2D" parent="."]
+script = ExtResource("2_44vfm")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+scale = Vector2(30, 1)
+texture = SubResource("GradientTexture2D_lbsl7")
+
+[node name="ColorRect" type="ColorRect" parent="Node2D/Sprite2D"]
+offset_left = -32.0
+offset_top = 16.0
+offset_right = 32.0
+offset_bottom = 352.0
+color = Color(0, 0, 0, 1)
+
+[node name="PlayerHitBox" type="Area2D" parent="Node2D/Sprite2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("2_fc3h2")
+hitbox_damage = 1000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Sprite2D/PlayerHitBox"]
+position = Vector2(1.13687e-13, 136)
+scale = Vector2(1.07233, 0.798251)
+shape = SubResource("RectangleShape2D_2r1eq")

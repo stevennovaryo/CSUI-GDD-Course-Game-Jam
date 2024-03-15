@@ -1,0 +1,149 @@
+[gd_scene load_steps=18 format=3 uid="uid://t6iw32ojlsvf"]
+
+[ext_resource type="Material" uid="uid://bvx7xcnjtr0hj" path="res://scenes/BlackAndWhite.tres" id="1_ptetj"]
+[ext_resource type="Script" path="res://scenes/LampEnvDarkenEffect.gd" id="1_vo34u"]
+[ext_resource type="SpriteFrames" uid="uid://daopbylphcg4h" path="res://assets/lantern.tres" id="2_c1gyu"]
+[ext_resource type="Script" path="res://scenes/TheLamp.gd" id="2_ll64j"]
+[ext_resource type="Script" path="res://scenes/LampMovement.gd" id="3_2qd82"]
+[ext_resource type="Shader" path="res://scenes/TheLamp.gdshader" id="3_gyj0i"]
+[ext_resource type="Script" path="res://scenes/TheLampParticle.gd" id="5_a0eki"]
+[ext_resource type="Texture2D" uid="uid://b4umei2pbffyb" path="res://scenes/TheLampParticleTexture.tres" id="5_nnrm5"]
+[ext_resource type="Script" path="res://LightHitBox.gd" id="7_i5m7h"]
+
+[sub_resource type="Gradient" id="Gradient_h1nfp"]
+offsets = PackedFloat32Array(0, 0.509804, 0.699346)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.156863, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mnrqn"]
+gradient = SubResource("Gradient_h1nfp")
+width = 600
+height = 600
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0.1)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pu2lt"]
+shader = ExtResource("3_gyj0i")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 0.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/red_weight = 0.2
+shader_parameter/blue_weight = 0.2
+shader_parameter/green_weight = 0.2
+shader_parameter/brightness = 1.0
+
+[sub_resource type="Gradient" id="Gradient_5bcya"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.564935, 0.79085)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.67451, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lu8fy"]
+gradient = SubResource("Gradient_5bcya")
+width = 300
+height = 300
+fill = 1
+fill_from = Vector2(0.5, 0.54)
+fill_to = Vector2(0.775229, 0.233945)
+
+[sub_resource type="Gradient" id="Gradient_uj60p"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.620915)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cuagu"]
+gradient = SubResource("Gradient_uj60p")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g1cmv"]
+radius = 69.029
+
+[node name="LampRoot" type="Node2D"]
+
+[node name="EnvDarkenEffect" type="Sprite2D" parent="."]
+visible = false
+z_index = 1000
+texture = SubResource("GradientTexture2D_mnrqn")
+script = ExtResource("1_vo34u")
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="EnvDarkenEffect"]
+offset_left = 296.0
+offset_top = -448.0
+offset_right = 512.0
+offset_bottom = 448.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="EnvDarkenEffect"]
+offset_left = -320.0
+offset_top = 264.0
+offset_right = 344.0
+offset_bottom = 448.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="EnvDarkenEffect"]
+offset_left = -432.0
+offset_top = -448.0
+offset_right = 400.0
+offset_bottom = -288.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="EnvDarkenEffect"]
+offset_left = -512.0
+offset_top = -448.0
+offset_right = -296.0
+offset_bottom = 448.0
+color = Color(0, 0, 0, 1)
+
+[node name="TheLamp" type="Node2D" parent="."]
+material = ExtResource("1_ptetj")
+script = ExtResource("2_ll64j")
+light_source_max_energy = null
+friction = null
+energy_depletion_rate = null
+lamp_light_minimum_energy = null
+lamp_light_minimum_texture_scale = null
+taken_energy_multiplier = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TheLamp"]
+z_index = 201
+material = SubResource("ShaderMaterial_pu2lt")
+position = Vector2(0, 10)
+sprite_frames = ExtResource("2_c1gyu")
+frame_progress = 0.0867862
+script = ExtResource("3_2qd82")
+
+[node name="LightMix" type="PointLight2D" parent="TheLamp/AnimatedSprite2D"]
+blend_mode = 2
+texture = SubResource("GradientTexture2D_lu8fy")
+metadata/_edit_lock_ = true
+
+[node name="LightAdd" type="PointLight2D" parent="TheLamp/AnimatedSprite2D"]
+visible = false
+blend_mode = 2
+texture = SubResource("GradientTexture2D_cuagu")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="TheLamp"]
+position = Vector2(103, 18)
+texture = ExtResource("5_nnrm5")
+script = ExtResource("5_a0eki")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="TheLamp/Sprite2D"]
+blend_mode = 2
+texture = ExtResource("5_nnrm5")
+texture_scale = 0.5
+
+[node name="LightHitBox" type="Area2D" parent="TheLamp"]
+script = ExtResource("7_i5m7h")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TheLamp/LightHitBox"]
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_g1cmv")
+metadata/_edit_lock_ = true

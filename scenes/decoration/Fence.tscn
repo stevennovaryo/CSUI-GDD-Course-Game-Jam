@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bofevnu1apyb6"]
+
+[ext_resource type="Material" uid="uid://bvx7xcnjtr0hj" path="res://scenes/BlackAndWhite.tres" id="1_xewmj"]
+[ext_resource type="Texture2D" uid="uid://7x4kxgw3lhl5" path="res://assets/OakWoods/fence_1.png" id="2_guqbn"]
+
+[node name="Fence" type="Node2D"]
+material = ExtResource("1_xewmj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
+texture = ExtResource("2_guqbn")

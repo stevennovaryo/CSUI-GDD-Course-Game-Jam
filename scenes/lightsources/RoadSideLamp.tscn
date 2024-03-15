@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1sglxnsioswq"]
+
+[ext_resource type="Script" path="res://LightSource.gd" id="1_molvo"]
+[ext_resource type="Material" uid="uid://bvx7xcnjtr0hj" path="res://scenes/BlackAndWhite.tres" id="2_7pgvr"]
+[ext_resource type="Texture2D" uid="uid://olptw20mus3y" path="res://assets/OakWoods/lamp.png" id="3_36u1h"]
+[ext_resource type="Script" path="res://LampPointLight.gd" id="4_wfdl3"]
+[ext_resource type="Script" path="res://LightHurtBox.gd" id="5_vhs3j"]
+
+[sub_resource type="Gradient" id="Gradient_hxr6c"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.607843, 0.797386, 0.901961, 0.993464)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.835294, 1, 1, 1, 0.705882, 1, 1, 1, 0.74902, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6wnid"]
+gradient = SubResource("Gradient_hxr6c")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.230415, 0.691244)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kwv7u"]
+radius = 34.0
+
+[node name="RoadSideLamp" type="Node2D"]
+z_index = -10
+script = ExtResource("1_molvo")
+
+[node name="Lamp" type="Sprite2D" parent="."]
+material = ExtResource("2_7pgvr")
+position = Vector2(6, 7)
+texture = ExtResource("3_36u1h")
+
+[node name="LampPointLight" type="PointLight2D" parent="."]
+scale = Vector2(2, 2)
+blend_mode = 2
+texture = SubResource("GradientTexture2D_6wnid")
+script = ExtResource("4_wfdl3")
+
+[node name="LightHurtBox" type="Area2D" parent="."]
+script = ExtResource("5_vhs3j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightHurtBox"]
+shape = SubResource("CircleShape2D_kwv7u")
+
+[connection signal="on_hit" from="." to="LampPointLight" method="_on_road_side_lamp_on_hit"]
